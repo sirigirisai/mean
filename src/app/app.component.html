@@ -1,20 +1,62 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div class="container mt-5"> 
+  <div>
+    <div class="row">
+      <div class="col-5">
+        <form #formInsert='ngForm' (submit)="AddPerson(formInsert.value)">
+          <div class="form-group">
+            <label>Name</label>
+            <input class="form-control" type="text" ngModel [(ngModel)]="NAME" name="NAME" required>
+          </div>
+          <div class="form-group">
+            <label>Age</label>
+            <input class="form-control" type="number" ngModel #AGE='ngModel' name="AGE" required>
+          </div>
+          <div class="form-group">
+            <label>Height</label>
+            <input class="form-control" type="number" ngModel [(ngModel)]="HEIGHT" name="HEIGHT" required>
+          </div>
+          <div class="form-group">
+            <label>Weight</label>
+            <input class="form-control" type="number" ngModel [(ngModel)]="WEIGHT" name="WEIGHT" required>
+          </div>
+          <button type="submit" [disabled]="formInsert.invalid" class="btn btn-success" aria-required="true">INSERT</button>&nbsp;
+          <button type="reset" class="btn btn-warning" (click)=ResetForm(formInsert)>RESET</button>&nbsp;
+          <input type="button" [disabled]="!HEIGHT || !WEIGHT || !NAME" class="btn btn-primary" value="Calculate BMI" (click)="bmical() == true">
+          <br><br>
+          <div *ngIf="formInsert.form.invalid" class="cross-validation-error-message">
+            <span class="text-danger">All fields are mandatory !</span>
+          </div>
+        </form>
+      </div>
+      <div class="col-7">
+        <table class="table table-hover table-sm table-success rounded table-borderless">
+          <!-- <th scope="col">ID</th> -->
+          <th>NAME </th>
+          <th>AGE</th>
+          <th>HEIGHT</th>
+          <th>WEIGHT</th>
+          <th></th>
+          <tr *ngFor="let item of persons">
+            <!-- <td class="text-center">{{ item.id }}</td> -->
+            <td>{{ item.NAME }}</td>
+            <td>{{ item.AGE }}</td>
+            <td>{{ item.HEIGHT }}</td>
+            <td>{{ item.WEIGHT }}</td>
+            <td><button class="btn" (click)=deletePerson(item.id)><i class="text-danger fas fa-trash-alt"></i></button></td>
+            <!-- <td><button class="btn btn-outline-warning">Edit</button></td> -->
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-
+<div>
+  <div class="container">
+    <h2 class="">
+      <pre class="text-info">
+      {{RESULT}}
+      </pre>
+    </h2>
+    <h3 class="display-4" [ngClass]="statusColor">{{STATUS}}</h3>
+  </div>
+</div>
